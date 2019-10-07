@@ -1,0 +1,58 @@
+[Writable]
+LogLevel = 'DEBUG'
+
+[Service]
+BootTimeout = 30000
+ClientMonitor = 15000
+CheckInterval = '10s'
+Host = 'localhost'
+Port = 48095
+Protocol = 'http'
+ReadMaxLimit = 100
+StartupMsg = 'IBM Watson IoT Export Service'
+Timeout = 5000
+
+[Registry]
+Host = 'localhost'
+Port = 8500
+Type = 'consul'
+
+[Clients]
+  [Clients.CoreData]
+  Protocol = 'http'
+  Host = 'localhost'
+  Port = 48080
+  [Clients.Logging]
+  Protocol = "http"
+  Host = "localhost"
+  Port = 48061
+
+[MessageBus]
+Type = 'zero'
+    [MessageBus.PublishHost]
+        Host = '*'
+        Port = 5564
+        Protocol = 'tcp'
+    [MessageBus.SubscribeHost]
+        Host = 'localhost'
+        Port = 5563
+        Protocol = 'tcp'
+
+[Logging]
+EnableRemote = false
+File = './logs/ibm-export.log'
+
+[Binding]
+Type="messagebus"
+SubscribeTopic="events"
+PublishTopic=""
+
+[ApplicationSettings]
+IBMIoTMQTTHost      = ".messaging.internetofthings.ibmcloud.com"
+IBMIoTMQTTPort      = "8883"
+IBMIoTOrg           = "abc123"
+IBMIoTDeviceType    = "testDeviceType"
+IBMIoTDeviceID      = "testDeviceID"
+MQTTCert            = "/path/to.cert.pem"
+MQTTKey             = "/path/to.private.key"
+topic               = "iot-2/evt/status/fmt/json"
